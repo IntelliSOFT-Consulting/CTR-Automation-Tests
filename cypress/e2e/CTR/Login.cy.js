@@ -15,7 +15,7 @@ describe('Test Suite', function () {
     it('Verify that a user cannot login with incorrect username & correct password', function () {
       cy.get('.navbar-inner > .container').contains('Login').click()
       cy.get('#UserUsername').type('rian')
-      cy.get('#UserPassword').type('Password')
+      cy.get('#UserPassword').type(this.config.password) 
       cy.contains('Sign in').click()
       cy.contains('Your username or password was incorrect').should('be.visible')
     })
