@@ -16,7 +16,7 @@ yarn-error.log*
 .env.*.local
 
 # Cypress configuration files
-cypress.config.js
+#cypress.config.js
 cypress.config.ts
 
 # OS-specific files
@@ -41,5 +41,5 @@ yarn.lock
 
 # Coverage reports
 coverage/
-cypress/fixtures/patientData.json
-config.json
+patientData.json
+configs.json
