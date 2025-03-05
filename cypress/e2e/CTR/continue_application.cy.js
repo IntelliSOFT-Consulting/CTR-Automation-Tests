@@ -28,12 +28,66 @@ it('Create Abstract', function () {
          cy.get('a > .label')
          .first()
          .click()
-         cy.get('#cke_contents_ApplicationStudyTitle > iframe').type('lorem')
+         
+
+     cy.get('#cke_contents_ApplicationStudyTitle > iframe', { timeout: 10000 })
+         .should('be.visible')
+         .then(($iframe) => {
+        const body = $iframe[0].contentDocument.body
+        cy.wrap(body)
+        .then(cy.wrap)
+        .click()
+        .type('This is my test text', { delay: 100 })       
+         })
+
+         cy.get('#cke_contents_ApplicationLaymansSummary > iframe', { timeout: 10000 })
+         .should('be.visible')
+         .then(($iframe) => {
+        const body = $iframe[0].contentDocument.body
+        cy.wrap(body)
+        .then(cy.wrap)
+        .click()
+        .type('This is my test text', { delay: 100 })       
+         })
+    
+     cy.get('#cke_contents_ApplicationAbstractOfStudy > iframe', { timeout: 10000 })
+     .should('be.visible')
+        .then(($iframe) => {
+        const body = $iframe[0].contentDocument.body
+        cy.wrap(body)
+        .then(cy.wrap)
+        .click()
+        .type('This is my test text', { delay: 100 })       
+        })
+
+
+       
+       
+       
+
+
          cy.get('#cke_contents_ApplicationLaymansSummary > iframe').type('lorem')
          cy.get('#cke_contents_ApplicationAbstractOfStudy > iframe').type('lorem')
          cy.get('#ApplicationVersionNo').type('1234')
          cy.get('#ApplicationReferenceNo').type('123412')
+         cy.get('#ApplicationDateOfProtocol')
+         .click()
+         .type('05-01-2025')
          cy.get('#ApplicationStudyDrug').type('Panadol')
+         cy.get('#StudyRoute0StudyRoute')
+         cy.get('#ApplicationDiseaseCondition').type('test')
+         cy.get('#ApplicationProductTypeBiologicals').click()
+
+         cy.get('#Manufacturer0ManufacturerName').type('test')
+         cy.get('#Manufacturer0Address').type('1234')
+         cy.get('#Manufacturer0ManufacturerEmail').type(testData.email)
+       //  cy.get('#Manufacturer0ManufacturingActivities').select()
+        // cy.get('#Manufacturer0ManufacturerCountry').click()
+        // cy.get('#ApplicationComparatorYes').click()
+         cy.get('#EthicalCommittee0EthicalCommittee').type('test')
+         cy.get('#EthicalCommittee0SubmissionDate').type('01-01-2025')
+         cy.get('#EthicalCommittee0ErcNumber').type('test')
+         cy.get('#EthicalCommittee0InitialApproval').type('01-01-2025')
          
           /* .closest('tr')
            //.find('Edit')
