@@ -12,7 +12,7 @@ describe('Test Suite', function () {
       cy.login()
     })
   
-  /*it('Start a new application', function () {
+  it('Start a new application', function () {
       cy.get('.navbar-inner > .container').contains('Login').click()
       cy.get('#UserUsername').type(this.configs.username) // Use `this.config`
       cy.get('#UserPassword').type(this.configs.password)
@@ -40,37 +40,17 @@ describe('Test Suite', function () {
       
 
 
-    })*/
-
-
-
-   it('Create Abstract', function () {
-       // cy.readFile('cypress/fixtures/applicationData.json').then((applicationData) => {
-
-        cy.get('.navbar-inner > .container').contains('Login').click()
-        cy.get('#UserUsername').type(this.configs.username) // Use `this.config`
-        cy.get('#UserPassword').type(this.configs.password)
-        cy.contains('Sign in').click()
-        cy.get('#maincontent').contains('Applications').click()
-        cy.fixture('applicationData.json').then((data) => {
-            cy.contains('td', data.title)
-              .closest('tr')
-              .find('Edit')
-              //.should('have.length', 1) // Ensure only one Edit button is found
-              .click();
-          });
-          
-          
-          
-        cy.get('.ui-tabs-nav').contains('Abstract').click()
-  
-      })
     })
+  })
+
+
+
+  
 
 
 
 
-  /*  const mailslurp = new MailSlurp({ apiKey: Cypress.env('MAILSLURP_API_KEY') });
+   /* const mailslurp = new MailSlurp({ apiKey: Cypress.env('MAILSLURP_API_KEY') });
     
     it('Verifies email after invoice is sent', async () => {
       const inbox = await mailslurp.createInbox();
@@ -85,5 +65,5 @@ describe('Test Suite', function () {
     
     
 
- // })
+  
   
