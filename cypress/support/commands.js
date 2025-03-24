@@ -8,11 +8,14 @@ Cypress.Commands.add("login", () => {
         cy.wrap(config).as('configData')  // Store in an alias
     })
 
-  /*  cy.get('@configData').then((config) => {
-        cy.get('#UserUsername').type(config.username)
-        cy.get('#UserPassword').type(config.password)
-        cy.contains('Sign in').click()
-    })*/
+    Cypress.Commands.add('selectRandomDropdown', (selector) => {
+        cy.get(selector).then(($select) => {
+          const options = $select.find('option:not([value=""])')
+          const randomIndex = Math.floor(Math.random() * options.length)
+          const randomValue = options.eq(randomIndex).val()
+          cy.wrap($select).select(randomValue)
+        })
+      })
 })
 
 
