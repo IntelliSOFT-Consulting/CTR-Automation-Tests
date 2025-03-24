@@ -1,8 +1,8 @@
 
 /// <reference types= "cypress"/>
-/// <reference types= "cypress"/>
 import { testData } from '../../support/fakerData'
-//import { MailSlurp } from 'mailslurp-client'
+import { generateRandomDate } from '../../support/fakerData'
+const randomDate = generateRandomDate();
 
 describe('Test Suite', function () {  
     
@@ -60,27 +60,17 @@ it('Create Abstract', function () {
         .type('This is my test text', { delay: 100 })       
         })
 
-
-       
-       
-       
-
-
          cy.get('#cke_contents_ApplicationLaymansSummary > iframe').type('lorem')
          cy.get('#cke_contents_ApplicationAbstractOfStudy > iframe').type('lorem')
          cy.get('#ApplicationVersionNo').type('1234')
          cy.get('#ApplicationReferenceNo').type('123412')
-         cy.get('#ApplicationDateOfProtocol')
-         .click()
-         .type('05-01-2025')
+        
+         cy.get('#ApplicationDateOfProtocol').type(randomDate);
+
          cy.get('#ApplicationStudyDrug').type('Panadol')
          
-         cy.get('#StudyRoute0StudyRoute').then(($select) => {
-          const options = $select.find('option:not([value=""])')
-          const randomIndex = Math.floor(Math.random() * options.length)
-          const randomValue = options.eq(randomIndex).val()
-          cy.wrap($select).select(randomValue)
-        })
+         cy.selectRandomDropdown('#StudyRoute0StudyRoute')
+          
 
          cy.get('#ApplicationDiseaseCondition').type('test')
          cy.get('#ApplicationProductTypeBiologicals').click()
@@ -93,21 +83,12 @@ it('Create Abstract', function () {
          cy.selectRandomDropdown('#Manufacturer0ManufacturerCountry')
          cy.get('#ApplicationComparatorYes').click()
          cy.selectRandomDropdown('#EthicalCommittee0EthicalCommittee')
-        /* cy.get('#EthicalCommittee0EthicalCommittee').type('test')
-         cy.get('#EthicalCommittee0SubmissionDate').type('01-01-2025')
-         cy.get('#EthicalCommittee0ErcNumber').type('test')
-         cy.get('#EthicalCommittee0InitialApproval').type('01-01-2025')
-         
-          /* .closest('tr')
-           //.find('Edit')
-           .get(':nth-child(*) > :nth-child(*) > a > .label')
-           //.should('have.length', 1) // Ensure only one Edit button is found
-           .click();*/
-       })
-       
-       
-       
-   //  cy.get('.ui-tabs-nav').contains('Abstract').click()
+         cy.get('#EthicalCommittee0SubmissionDate').type(randomDate)
+         const committeeNumber = Math.floor(Math.random() * 9000) + 1000;
 
-   })
+         cy.get('#EthicalCommittee0ErcNumber').type(committeeNumber)
+         cy.get('#SadrSaveChanges').click()
+       
+       })
+      })
  })
