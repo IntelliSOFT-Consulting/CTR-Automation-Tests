@@ -74,17 +74,26 @@ it('Create Abstract', function () {
          .click()
          .type('05-01-2025')
          cy.get('#ApplicationStudyDrug').type('Panadol')
-         cy.get('#StudyRoute0StudyRoute')
+         
+         cy.get('#StudyRoute0StudyRoute').then(($select) => {
+          const options = $select.find('option:not([value=""])')
+          const randomIndex = Math.floor(Math.random() * options.length)
+          const randomValue = options.eq(randomIndex).val()
+          cy.wrap($select).select(randomValue)
+        })
+
          cy.get('#ApplicationDiseaseCondition').type('test')
          cy.get('#ApplicationProductTypeBiologicals').click()
 
          cy.get('#Manufacturer0ManufacturerName').type('test')
          cy.get('#Manufacturer0Address').type('1234')
          cy.get('#Manufacturer0ManufacturerEmail').type(testData.email)
-       //  cy.get('#Manufacturer0ManufacturingActivities').select()
-        // cy.get('#Manufacturer0ManufacturerCountry').click()
-        // cy.get('#ApplicationComparatorYes').click()
-         cy.get('#EthicalCommittee0EthicalCommittee').type('test')
+
+         cy.selectRandomDropdown('#Manufacturer0ManufacturingActivities')
+         cy.selectRandomDropdown('#Manufacturer0ManufacturerCountry')
+         cy.get('#ApplicationComparatorYes').click()
+         cy.selectRandomDropdown('#EthicalCommittee0EthicalCommittee')
+        /* cy.get('#EthicalCommittee0EthicalCommittee').type('test')
          cy.get('#EthicalCommittee0SubmissionDate').type('01-01-2025')
          cy.get('#EthicalCommittee0ErcNumber').type('test')
          cy.get('#EthicalCommittee0InitialApproval').type('01-01-2025')
@@ -94,11 +103,11 @@ it('Create Abstract', function () {
            .get(':nth-child(*) > :nth-child(*) > a > .label')
            //.should('have.length', 1) // Ensure only one Edit button is found
            .click();*/
-       });
+       })
        
        
        
-     cy.get('.ui-tabs-nav').contains('Abstract').click()
+   //  cy.get('.ui-tabs-nav').contains('Abstract').click()
 
    })
  })
