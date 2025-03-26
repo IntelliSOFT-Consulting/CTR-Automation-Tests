@@ -12,7 +12,7 @@ describe('Test Suite', function () {
       })
       cy.baseurl()
       cy.login()
-    })
+    })/*
 it('Create Abstract', function () {
     // cy.readFile('cypress/fixtures/applicationData.json').then((applicationData) => {
 
@@ -90,5 +90,28 @@ it('Create Abstract', function () {
          cy.get('#SadrSaveChanges').click()
        
        })
+      })*/
+
+
+      it('Sites', function() {
+        cy.get('.navbar-inner > .container').contains('Login').click()
+        cy.get('#UserUsername').type(this.configs.username) // Use `this.config`
+        cy.get('#UserPassword').type(this.configs.password)
+        cy.contains('Sign in').click()
+        cy.get('.menu > .nav').contains('My Applications').click()
+        cy.fixture('applicationData.json').then((data) => {
+            cy.contains('td', data.title).should('be.visible')
+            cy.get('#ApplicationFilter').type(data.title)
+            cy.get('.btn-inverse').click()
+            cy.get('a > .label')
+            .first()
+            .click()
+        cy.get('#maincontent').contains('Sites').click()
+        cy.get('#ApplicationSingleSiteMemberStateYes').click()
+        cy.get('#ApplicationLocationOfArea').type(data.site)
+
+
+          
+        })
       })
  })
