@@ -10,7 +10,8 @@ export const testData = {
   qualification: faker.person.jobTitle(), // Generates a random job title
   phone: faker.phone.number(), // Generates a random phone number
   email: faker.internet.email(), // Generates a random email
-  title : faker.person.jobType() // Generates a general job type
+  title : faker.person.jobType(), // Generates a general job type
+  site : faker.location.city()
 
 };
 
