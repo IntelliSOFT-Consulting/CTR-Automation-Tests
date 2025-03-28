@@ -12,7 +12,7 @@ describe('Test Suite', function () {
       })
       cy.baseurl()
       cy.login()
-    })/*
+    })
 it('Create Abstract', function () {
     // cy.readFile('cypress/fixtures/applicationData.json').then((applicationData) => {
 
@@ -90,7 +90,7 @@ it('Create Abstract', function () {
          cy.get('#SadrSaveChanges').click()
        
        })
-      })*/
+      })
 
 
       it('Sites', function() {
@@ -108,10 +108,56 @@ it('Create Abstract', function () {
             .click()
         cy.get('#maincontent').contains('Sites').click()
         cy.get('#ApplicationSingleSiteMemberStateYes').click()
-        cy.get('#ApplicationLocationOfArea').type(data.site)
+        cy.get('#ApplicationLocationOfArea').type(testData.site)
+        cy.get('#ApplicationMultipleCountriesNo').click()
+        cy.get('#cke_contents_ApplicationStaffNumbers > iframe', { timeout: 10000 })
+        .should('be.visible')
+           .then(($iframe) => {
+           const body = $iframe[0].contentDocument.body
+           cy.wrap(body)
+           .then(cy.wrap)
+           .click()
+           .type('This is my test text', { delay: 100 })       
+           })
+           cy.get('#SadrSaveChanges').click()
+
 
 
           
         })
       })
+
+      it('Checklist', function() {
+        cy.get('.navbar-inner > .container').contains('Login').click()
+        cy.get('#UserUsername').type(this.configs.username) // Use `this.config`
+        cy.get('#UserPassword').type(this.configs.password)
+        cy.contains('Sign in').click()
+        cy.get('.menu > .nav').contains('My Applications').click()
+        cy.fixture('applicationData.json').then((data) => {
+            cy.contains('td', data.title).should('be.visible')
+            cy.get('#ApplicationFilter').type(data.title)
+            cy.get('.btn-inverse').click()
+            cy.get('a > .label')
+            .first()
+            .click()
+            cy.get('#maincontent').contains('Checklist').click()        
+            cy.get('#tabs-12 .add-checklist').each(($button, index) => {
+              cy.wrap($button).click()        
+              cy.wrap($button).parents('.control-group').within(() => {              
+                cy.get('input[type="file"]', { timeout: 10000 })
+                  .selectFile('cypress/fixtures/files/test.pdf', { force: true }) 
+                  cy.wait(1000)       
+                cy.contains('button', 'Upload', { timeout: 1000 })
+                  .should('be.visible')
+                  .click();               
+              if (index > 0) cy.wait(2000)
+            })
+          })
+        
+
+
+
+          
+        })
  })
+})
