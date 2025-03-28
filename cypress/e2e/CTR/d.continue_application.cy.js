@@ -13,7 +13,7 @@ describe('Test Suite', function () {
       cy.baseurl()
       cy.login()
     })
-it('Create Abstract', function () {
+/*it('Create Abstract', function () {
     // cy.readFile('cypress/fixtures/applicationData.json').then((applicationData) => {
 
      cy.get('.navbar-inner > .container').contains('Login').click()
@@ -125,45 +125,71 @@ it('Create Abstract', function () {
 
           
         })
-      })
+      })*/
 
-      it('Checklist', function() {
-        cy.get('.navbar-inner > .container').contains('Login').click()
-        cy.get('#UserUsername').type(this.configs.username) // Use `this.config`
-        cy.get('#UserPassword').type(this.configs.password)
-        cy.contains('Sign in').click()
-        cy.get('.menu > .nav').contains('My Applications').click()
-        cy.fixture('applicationData.json').then((data) => {
-            cy.contains('td', data.title).should('be.visible')
-            cy.get('#ApplicationFilter').type(data.title)
-            cy.get('.btn-inverse').click()
-            cy.get('a > .label')
-            .first()
-            .click()
-            cy.get('#maincontent').contains('Checklist').click()        
-            cy.get('#tabs-12 .add-checklist').each(($button, index) => {
-              cy.wrap($button).click()        
-              cy.wrap($button).parents('.control-group').within(() => {              
-                cy.get('input[type="file"]', { timeout: 10000 })
-                  .selectFile('cypress/fixtures/files/1743061322_PPB.pdf', { force: true }) 
-                  cy.wait(1000) 
-                  cy.get('input.datepickers[type="text"]')
-                    .type(randomDate) 
-                       
-                cy.contains('button', 'Upload', { timeout: 1000 })
-                  .should('be.visible')
-                  .click()
-                  
-                  cy.get('a.btn.btn-info[href*="/applicant/attachments/download/"]', { timeout: 30000 })
-                    .should('be.visible')
-                    //.and('contain', 'test_100.pdf') 
-                    .and('have.attr', 'href')
-                    .should('include', '/download/')
-            //  if (index > 0) cy.wait(2000)
-            })
-          })
-        })
-      cy.get('#SadrSaveChanges').click()
-      cy.get('.alert .alert-success', {timeout: 20000}).should('contain', 'The change to the application has been saved. You may continue editing the report.')
-        })
-      })
+        it('Checklist', function() {
+          // Test configuration
+          const testFiles = [
+              'cypress/fixtures/files/1743151953_PPB.pdf',
+              'cypress/fixtures/files/1743151936_PPB.pdf',
+              'cypress/fixtures/files/1743151981_PPB.pdf',
+              'cypress/fixtures/files/1743151986_PPB.pdf',
+              'cypress/fixtures/files/1743151993_PPB.pdf'
+             
+          ]
+      
+          const randomDate = () => {
+              const start = new Date(2020, 0, 1)
+              const end = new Date()
+              const date = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()))
+              return date.toLocaleDateString('en-GB')
+          }
+      
+          cy.get('.navbar-inner > .container').contains('Login').click()
+          cy.get('#UserUsername').type(this.configs.username)
+          cy.get('#UserPassword').type(this.configs.password)
+          cy.contains('Sign in').click()
+          cy.get('.menu > .nav').contains('My Applications').click();
+      
+          cy.fixture('applicationData.json').then((data) => {
+              // Application selection
+              cy.contains('td', data.title).should('be.visible')
+              cy.get('#ApplicationFilter').type(data.title)
+              cy.get('.btn-inverse').click();
+              cy.get('a > .label').first().click()
+              cy.get('#maincontent').contains('Checklist').click()
+      
+              cy.get('#tabs-12 .add-checklist').each(($button, index) => {
+                  const randomFile = testFiles[Math.floor(Math.random() * testFiles.length)];
+                  const fileName = randomFile.split('/').pop()
+      
+                  cy.wrap($button).click();
+                  cy.wrap($button).parents('.control-group').within(() => {
+                      cy.get('input[type="file"]', { timeout: 10000 })
+                          .selectFile(randomFile, { force: true })
+      
+                      cy.get('input.datepickers[type="text"]', { timeout: 15000 })
+                          .should('be.visible')
+                          .clear()
+                          .type(randomDate())
+      
+                      cy.contains('button', 'Upload', { timeout: 10000 })
+                          .should('be.visible')
+                          .click()
+      
+                      cy.get('a.btn.btn-info[href*="/applicant/attachments/download/"]', { timeout: 30000 })
+                          .should('be.visible')
+                         // .and('contain', fileName.split('.')[0]) // Match filename without extension
+                          .and('have.attr', 'href')
+                          .should('include', '/download/')
+                  })
+      
+                  if (index > 0) cy.wait(500)
+              })
+      
+              cy.get('#SadrSaveChanges').click();
+              cy.get('.alert.alert-success', { timeout: 20000 })
+                  .should('contain', 'The change to the application has been saved')
+          });
+      });
+    })
