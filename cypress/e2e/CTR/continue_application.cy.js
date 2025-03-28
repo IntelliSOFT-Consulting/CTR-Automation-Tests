@@ -146,18 +146,17 @@ it('Create Abstract', function () {
               cy.wrap($button).parents('.control-group').within(() => {              
                 cy.get('input[type="file"]', { timeout: 10000 })
                   .selectFile('cypress/fixtures/files/test.pdf', { force: true }) 
-                  cy.wait(1000)       
+                  cy.wait(1000) 
+                  cy.get('input.datepickers[type="text"][name*="file_date"]')
+                    .type(randomDate) 
+                       
                 cy.contains('button', 'Upload', { timeout: 1000 })
                   .should('be.visible')
                   .click();               
               if (index > 0) cy.wait(2000)
             })
           })
-        
-
-
-
-          
         })
- })
-})
+      cy.get('#SadrSaveChanges').click()
+      })
+      })
