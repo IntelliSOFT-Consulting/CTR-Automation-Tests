@@ -13,7 +13,7 @@ describe('Test Suite', function () {
       cy.baseurl()
       cy.login()
     })
-/*it('Create Abstract', function () {
+it('Create Abstract', function () {
     // cy.readFile('cypress/fixtures/applicationData.json').then((applicationData) => {
 
      cy.get('.navbar-inner > .container').contains('Login').click()
@@ -125,7 +125,7 @@ describe('Test Suite', function () {
 
           
         })
-      })*/
+      })
 
         it('Checklist', function() {
           // Test configuration
