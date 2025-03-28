@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 
 export const testData = {
-  username: faker.internet.userName(),
+  username: faker.internet.username(),
   password: faker.internet.password({ length: 12, memorable: false, mixCase: true, symbols: true }),
   institutionName: faker.company.name(),
   address: faker.location.streetAddress(),
