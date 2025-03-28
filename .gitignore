@@ -43,3 +43,4 @@ yarn.lock
 coverage/
 patientData.json
 configs.json
+applicationData.json
